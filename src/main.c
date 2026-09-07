@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -7,32 +6,20 @@
 #include <arpa/inet.h>
 #include "icmp.h"
 
-uint16_t compute_checksum(void* data, int size)
-{
-	long sum = 0;
-	uint16_t* ptr = data;
+#include "parsing.h"
 
-	while (size > 1)
-	{
-		sum += *ptr;
-		size -= 2;
-		++ptr;
-	}
-
-	if (size > 0)
-		sum += *(uint8_t*)ptr;
-
-	while (sum >> 16)
-		sum = (sum & 0xFFFF) + (sum >> 16);
-
-	return (~sum);
-}
-
-int main(void)
+int main(int argc, char** argv)
 {
 	write(1, "ft_ping\n", 8);
 
-	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	int ret = parsing_args(argc, argv);
+
+	if (ret == PARSE_HELP)
+		return (0);
+	else
+		return (ret);
+
+/*	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (fd == -1)
 		return (1);
 
@@ -60,6 +47,6 @@ int main(void)
 	t_icmp_header *icmp_recv = (t_icmp_header *)(buffer + packet_len);
 
 
-	printf("type: %d ident: %d sed: %d\n", icmp_recv->type, ntohs(icmp_recv->identifier), ntohs(icmp_recv->sequence));
+	printf("type: %d ident: %d sed: %d\n", icmp_recv->type, ntohs(icmp_recv->identifier), ntohs(icmp_recv->sequence));*/
 	return (0);
 }

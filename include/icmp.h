@@ -12,4 +12,6 @@ typedef struct s_icmp_header
 	uint16_t sequence;
 }	t_icmp_header;
 
+uint16_t compute_checksum(void* data, int size);
+
 #endif
