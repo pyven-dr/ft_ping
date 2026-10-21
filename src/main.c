@@ -1,12 +1,12 @@
-#include <stdio.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
-#include "icmp.h"
+#include <getopt.h>
 
 #include "parsing.h"
+#include "process.h"
 
 int main(int argc, char** argv)
 {
@@ -16,8 +16,14 @@ int main(int argc, char** argv)
 
 	if (ret == PARSE_HELP)
 		return (0);
-	else
-		return (ret);
+	else if (ret ==	PARSE_ERROR)
+		return (64);
+
+	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (fd == -1)
+		return (1);
+
+	return (process_loop(argv + optind, argc - optind, fd));
 
 /*	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (fd == -1)

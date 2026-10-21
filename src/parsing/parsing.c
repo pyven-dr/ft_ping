@@ -15,6 +15,7 @@ int parsing_args(int argc, char** argv)
 
 	opterr = 0;
 	int flag = getopt_long(argc, argv, "?v", long_options, NULL);
+
 	while (flag != -1)
 	{
 		int ret = handle_flags(flag, argv);
@@ -23,9 +24,13 @@ int parsing_args(int argc, char** argv)
 		
 		flag = getopt_long(argc, argv, "?v", long_options, NULL);
 	}
-
-	for (int i = optind; i < argc; ++i)
-		printf("arg %s\n", argv[i]);
+	
+	if (optind == argc)
+	{
+		dprintf(2, "ft_ping: missing host operand\n");
+		dprintf(2, "Try 'ft_ping --help' or 'ping --usage' for more information.\n");
+		return (PARSE_ERROR);
+	}
 	return (PARSE_OK);
 }
 

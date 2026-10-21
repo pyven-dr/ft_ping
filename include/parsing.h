@@ -7,7 +7,7 @@ typedef enum e_parse_codes
 {
 	PARSE_OK = 0,
 	PARSE_HELP = 1,
-	PARSE_INVALID_OPT = 64
+	PARSE_ERROR = 2
 }	t_parse_code;
 
 int parsing_args(int argc, char** argv);
