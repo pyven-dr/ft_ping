@@ -4,25 +4,30 @@
 
 #include "parsing.h"
 
-int parsing_args(int argc, char** argv)
+int parsing_args(int argc, char** argv, t_ping_opt* opt)
 {
 	static struct option long_options[] =
 	{
 		{"help", no_argument, NULL, OPT_HELP},
 		{"verbose", no_argument, NULL, 'v'},
+		{"count", required_argument, NULL, 'c'},
+		{"interval", required_argument, NULL, 'i'},
+		{"ttl", required_argument, NULL, 't'},
+		{"timeout", required_argument, NULL, 'w'},
+		{"linger", required_argument, NULL, 'W'},
 		{0, 0, 0, 0}
 	};
 
 	opterr = 0;
-	int flag = getopt_long(argc, argv, "?v", long_options, NULL);
+	int flag = getopt_long(argc, argv, ":?vc:i:w:W:", long_options, NULL);
 
 	while (flag != -1)
 	{
-		int ret = handle_flags(flag, argv);
+		int ret = handle_flags(flag, argv, opt);
 		if (ret != 0)
 			return (ret);
 		
-		flag = getopt_long(argc, argv, "?v", long_options, NULL);
+		flag = getopt_long(argc, argv, ":?vc:i:w:W:", long_options, NULL);
 	}
 	
 	if (optind == argc)
@@ -33,4 +38,3 @@ int parsing_args(int argc, char** argv)
 	}
 	return (PARSE_OK);
 }
-

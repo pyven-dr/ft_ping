@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "opt.h"
 #include "parsing.h"
 
 static void invalid_opt(char **argv)
@@ -13,7 +14,43 @@ static void invalid_opt(char **argv)
 	dprintf(2, "Try 'ft_ping --help' for more information.\n");
 }
 
-int handle_flags(int flag, char **argv)
+static void missing_arg(char **argv)
+{
+	if (strncmp(argv[optind - 1], "--", 2) != 0)
+		dprintf(2, "ft_ping: option requires an argument -- '%c'\n", optopt);
+	else
+		dprintf(2, "ft_ping: option '%s' requires an argument\n", argv[optind - 1]);
+	dprintf(2, "Try 'ft_ping --help' for more information.\n");
+}
+
+static int parse_flag(int flag, t_ping_opt* opt)
+{
+	switch (flag)
+	{
+		case 'v':
+		{
+			opt->verbose = true;
+			return (PARSE_OK);
+		}
+		//TODO set min and max.
+		case 'c':
+			return (set_opt(&opt->count, optarg, 0, 255));
+		case 'i':
+			return (set_opt(&opt->interval, optarg, 0, 255));
+		case 'w':
+			return (set_opt(&opt->timeout, optarg, 0, 255));
+		case 'W':
+			return (set_opt(&opt->linger, optarg, 0, 255));
+		case 't':
+			return (set_opt(&opt->ttl, optarg, 0, 255));
+		case OPT_HELP:
+			return (PARSE_HELP);
+		default:
+			__builtin_unreachable();
+	}
+}
+
+int handle_flags(int flag, char **argv, t_ping_opt* opt)
 {
 	if (flag == '?')
 	{
@@ -22,18 +59,13 @@ int handle_flags(int flag, char **argv)
 			printf("? opt\n");
 			return (PARSE_HELP);
 		}
-		else	
-		{
 			invalid_opt(argv);
 			return (PARSE_ERROR);
-		}
 	}
-	else if (flag == 'v')
-		printf("v opt\n");
-	else if (flag == OPT_HELP)
+	if (flag == ':')
 	{
-		printf("? opt\n");
-		return (PARSE_HELP);
+		missing_arg(argv);
+		return (PARSE_ERROR);
 	}
-	return (PARSE_OK);
+	return (parse_flag(flag, opt));
 }

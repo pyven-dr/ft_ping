@@ -3,6 +3,8 @@
 
 int process_loop(char** hosts, int nb_hosts, int socket_fd)
 {
+	(void)socket_fd;
+	printf("%d\n", nb_hosts);
 	for (int i = 0; i < nb_hosts; ++i)
 	{
 		struct sockaddr_in addr = {0};
@@ -20,4 +22,3 @@ int process_loop(char** hosts, int nb_hosts, int socket_fd)
 	}
 	return (0);
 }
-

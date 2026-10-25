@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <getopt.h>
 
+#include "opt.h"
 #include "parsing.h"
 #include "process.h"
 
@@ -12,11 +13,13 @@ int main(int argc, char** argv)
 {
 	write(1, "ft_ping\n", 8);
 
-	int ret = parsing_args(argc, argv);
+	t_ping_opt opt = {0};
+
+	int ret = parsing_args(argc, argv, &opt);
 
 	if (ret == PARSE_HELP)
 		return (0);
-	else if (ret ==	PARSE_ERROR)
+	if (ret ==	PARSE_ERROR)
 		return (64);
 
 	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
