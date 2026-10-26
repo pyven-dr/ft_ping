@@ -1,6 +1,6 @@
 SRC = main.c \
 	  process_loop.c \
-	  resolve_domain.c \
+	  resolve_addr.c \
 	  \
 	  parsing/parsing.c \
 	  parsing/handle_flags.c \
