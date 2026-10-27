@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+#define ICMP_ECHO 8
+#define IMCP_ECHO_REPLY 0
+
 typedef struct s_icmp_header
 {
 	uint8_t type;

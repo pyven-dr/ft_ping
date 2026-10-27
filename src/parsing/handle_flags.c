@@ -1,6 +1,7 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 #include "opt.h"
 #include "parsing.h"
@@ -32,17 +33,18 @@ static int parse_flag(int flag, t_ping_opt* opt)
 			opt->verbose = true;
 			return (PARSE_OK);
 		}
-		//TODO set min and max.
 		case 'c':
-			return (set_opt(&opt->count, optarg, 0, 255));
+			return (set_opt(&opt->count, optarg, 0, 0));
 		case 'i':
-			return (set_opt(&opt->interval, optarg, 0, 255));
+			return (set_opt_double(&opt->interval, optarg, 0.2));
 		case 'w':
-			return (set_opt(&opt->timeout, optarg, 0, 255));
+			return (set_opt(&opt->timeout, optarg, 1, MAX_TIMEOUT));
 		case 'W':
-			return (set_opt(&opt->linger, optarg, 0, 255));
+			return (set_opt(&opt->linger, optarg, 1, MAX_LINGER));
 		case 't':
-			return (set_opt(&opt->ttl, optarg, 0, 255));
+			return (set_opt(&opt->ttl, optarg, 1, MAX_TTL));
+		case 's':
+			return (set_opt(&opt->size, optarg, 0, MAX_DATA_SIZE));
 		case OPT_HELP:
 			return (PARSE_HELP);
 		default:

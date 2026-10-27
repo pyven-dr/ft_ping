@@ -3,6 +3,8 @@
 
 #define OPT_HELP 200
 
+#include <stdlib.h>
+
 typedef struct s_ping_opt t_ping_opt;
 
 typedef enum e_parse_codes
@@ -15,5 +17,6 @@ typedef enum e_parse_codes
 int parsing_args(int argc, char** argv, t_ping_opt* opt);
 int handle_flags(int flag, char **argv, t_ping_opt* opt);
 int set_opt(size_t* opt, char* arg, unsigned long min, unsigned long max);
+int set_opt_double(double* opt, char* arg, double min);
 
 #endif

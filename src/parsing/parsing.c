@@ -3,6 +3,14 @@
 #include <unistd.h>
 
 #include "parsing.h"
+#include "opt.h"
+
+static void default_opt(t_ping_opt* opt)
+{
+	opt->size = DEFAULT_SIZE;
+	opt->interval = DEFAULT_INTERVAL;
+	opt->ttl = DEFAULT_TTL;
+}
 
 int parsing_args(int argc, char** argv, t_ping_opt* opt)
 {
@@ -15,11 +23,13 @@ int parsing_args(int argc, char** argv, t_ping_opt* opt)
 		{"ttl", required_argument, NULL, 't'},
 		{"timeout", required_argument, NULL, 'w'},
 		{"linger", required_argument, NULL, 'W'},
+		{"size", required_argument, NULL, 's'},
 		{0, 0, 0, 0}
 	};
 
 	opterr = 0;
-	int flag = getopt_long(argc, argv, ":?vc:i:w:W:", long_options, NULL);
+	default_opt(opt);
+	int flag = getopt_long(argc, argv, ":?vc:i:w:W:s:", long_options, NULL);
 
 	while (flag != -1)
 	{
@@ -27,7 +37,7 @@ int parsing_args(int argc, char** argv, t_ping_opt* opt)
 		if (ret != 0)
 			return (ret);
 		
-		flag = getopt_long(argc, argv, ":?vc:i:w:W:", long_options, NULL);
+		flag = getopt_long(argc, argv, ":?vc:i:w:W:s:", long_options, NULL);
 	}
 	
 	if (optind == argc)

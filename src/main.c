@@ -4,29 +4,30 @@
 #include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <getopt.h>
+#include <stdlib.h>
 
-#include "opt.h"
 #include "parsing.h"
 #include "process.h"
+#include "client.h"
 
 int main(int argc, char** argv)
 {
-	write(1, "ft_ping\n", 8);
+	int ret;
+	t_client client = {0};
 
-	t_ping_opt opt = {0};
-
-	int ret = parsing_args(argc, argv, &opt);
-
+	ret = parsing_args(argc, argv, &client.opt);
 	if (ret == PARSE_HELP)
 		return (0);
 	if (ret ==	PARSE_ERROR)
 		return (64);
 
-	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
-	if (fd == -1)
+	if (init_client(&client) == 1)
 		return (1);
 
-	return (process_loop(argv + optind, argc - optind, fd));
+	ret = process_loop(argv + optind, argc - optind, &client);
+	free(client.buffer);
+	close(client.socket_fd);
+	return (ret);
 
 /*	int fd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (fd == -1)
