@@ -3,10 +3,13 @@
 
 #include <stdbool.h>
 #include <limits.h>
+#include <stddef.h>
 
-#define DEFAULT_SIZE 65
+#define S_TO_MS 1000
+
+#define DEFAULT_SIZE 56
 #define DEFAULT_TTL 255
-#define DEFAULT_INTERVAL 1
+#define DEFAULT_INTERVAL 1000
 
 #define MAX_TTL 255
 #define MAX_TIMEOUT INT_MAX
@@ -16,7 +19,7 @@
 typedef struct s_ping_opt
 {
 	size_t count;
-	double interval;
+	size_t interval;
 	size_t ttl;
 	size_t timeout;
 	size_t linger;

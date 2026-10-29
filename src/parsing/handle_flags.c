@@ -24,6 +24,16 @@ static void missing_arg(char **argv)
 	dprintf(2, "Try 'ft_ping --help' for more information.\n");
 }
 
+static int set_opt_ms(size_t* opt, unsigned long min, unsigned long max)
+{
+	size_t val = 0;
+
+	if (set_opt(&val, optarg, min, max) == PARSE_ERROR)
+		return (PARSE_ERROR);
+	*opt = val * S_TO_MS;
+	return (PARSE_OK);
+}
+
 static int parse_flag(int flag, t_ping_opt* opt)
 {
 	switch (flag)
@@ -36,11 +46,18 @@ static int parse_flag(int flag, t_ping_opt* opt)
 		case 'c':
 			return (set_opt(&opt->count, optarg, 0, 0));
 		case 'i':
-			return (set_opt_double(&opt->interval, optarg, 0.2));
+		{
+			double val;
+
+			if (set_opt_double(&val, optarg, 0.2) == PARSE_ERROR)
+				return (PARSE_ERROR);
+			opt->interval = (size_t)(val * S_TO_MS);
+			return (PARSE_OK);
+		}
 		case 'w':
-			return (set_opt(&opt->timeout, optarg, 1, MAX_TIMEOUT));
+			return (set_opt_ms(&opt->timeout, 1, MAX_TIMEOUT));
 		case 'W':
-			return (set_opt(&opt->linger, optarg, 1, MAX_LINGER));
+			return (set_opt_ms(&opt->linger, 1, MAX_LINGER));
 		case 't':
 			return (set_opt(&opt->ttl, optarg, 1, MAX_TTL));
 		case 's':

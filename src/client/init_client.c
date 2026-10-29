@@ -6,8 +6,6 @@
 #include "client.h"
 #include "icmp.h"
 
-
-#include <stdio.h>
 static void write_pattern(unsigned char* buffer, int size)
 {
 	unsigned char val = 0;
@@ -37,6 +35,7 @@ int init_client(t_client* client)
 	else
 		write_pattern(client->buffer + sizeof(t_icmp_header) + 16, client->opt.size - 16);
 
+	client->ping_id = getpid();
 	return (0);
 }
 

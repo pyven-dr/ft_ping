@@ -4,6 +4,7 @@ SRC = main.c \
 	  checksum.c \
 	  \
 	  client/init_client.c \
+	  client/send_ping.c \
 	  \
 	  parsing/parsing.c \
 	  parsing/handle_flags.c \
