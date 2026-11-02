@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 	if (init_client(&client) == 1)
 		return (1);
 
-	ret = process_loop(argv + optind, argc - optind, &client);
+	ret = process_hosts(argv + optind, argc - optind, &client);
 	free(client.buffer);
 	close(client.socket_fd);
 	return (ret);

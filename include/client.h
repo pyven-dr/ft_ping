@@ -37,5 +37,7 @@ typedef struct s_ping_stats
 
 int init_client(t_client* client);
 int send_ping(struct sockaddr_in *addr, t_client *client, int seq_number);
+int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats);
+int ping_loop(t_client* client, struct sockaddr_in* addr);
 
 #endif
