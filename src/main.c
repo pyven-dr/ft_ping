@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #include "parsing.h"
-#include "process.h"
+#include "network.h"
 #include "client.h"
 
 int main(int argc, char** argv)

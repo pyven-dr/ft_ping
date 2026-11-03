@@ -1,29 +1,27 @@
 #include <stdint.h>
 #include <arpa/inet.h>
-#include <string.h>
 
+#include "client.h"
 #include "ip.h"
+#include "network.h"
 
-static uint32_t read_raw_32(uint8_t* raw_packet, size_t offset)
+static int check_valid(const t_rx_packet* packet)
 {
-	uint32_t val = 0;
-
-	memcpy(&val, raw_packet + offset, sizeof(uint32_t));
-
-	return (ntohl(val));
+	if (packet->ip_header.version != 4)
+		return (1);
+	if (compute_checksum(packet->raw_packet, packet->ip_header.ihl * 4) != 0)
+		return (1);
+	return (0);
 }
 
-static uint16_t read_raw_16(uint8_t* raw_packet, size_t offset)
+int parse_ip_header(t_rx_packet* packet)
 {
-	uint16_t val = 0;
+	t_ip_header* ip_header = &packet->ip_header;
+	uint8_t* raw_packet = packet->raw_packet;
 
-	memcpy(&val, raw_packet + offset, sizeof(uint16_t));
+	if (packet->packet_size < 20)
+		return (1);
 
-	return (ntohs(val));
-}
-
-int parse_ip_header(uint8_t* raw_packet, t_ip_header* ip_header)
-{
 	ip_header->version = IP_VERSION(raw_packet[IP_VERSION_OFFSET]);
 	ip_header->ihl = IP_IHL(raw_packet[IP_VERSION_OFFSET]);
 	ip_header->tos = raw_packet[IP_TOS_OFFSET];
@@ -35,5 +33,5 @@ int parse_ip_header(uint8_t* raw_packet, t_ip_header* ip_header)
 	ip_header->header_checksum = read_raw_16(raw_packet, IP_CHECKSUM_OFFSET);
 	ip_header->src_addr = read_raw_32(raw_packet, IP_SRC_ADDR_OFFSET);
 	ip_header->dest_addr = read_raw_32(raw_packet, IP_DEST_ADDR_OFFSET);
-	return (0);
+	return (check_valid(packet));
 }

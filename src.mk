@@ -13,5 +13,8 @@ SRC = main.c \
 	  parsing/set_opt.c \
 	  \
 	  packet/parse_packet.c \
+	  packet/read_raw.c \
 	  \
-	  packer/ip/parse_ip_hdr.c \
+	  packet/ip/parse_ip_hdr.c \
+	  \
+	  packet/icmp/parse_icmp_msg.c \

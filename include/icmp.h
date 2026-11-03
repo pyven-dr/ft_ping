@@ -3,8 +3,17 @@
 
 #include <stdint.h>
 
-#define ICMP_ECHO 8
-#define IMCP_ECHO_REPLY 0
+typedef struct s_client t_client;
+typedef  struct s_rx_packet t_rx_packet;
+
+#define ICMP_ECHO		8
+#define IMCP_ECHO_REPLY	0
+
+#define ICMP_TYPE_OFFSET		0
+#define ICMP_CODE_OFFSET		1
+#define ICMP_CHECKSUM_OFFSET	2
+#define ICMP_ID_OFFSET			4
+#define ICMP_SEQ_OFFSET			6
 
 typedef struct s_icmp_header
 {
@@ -15,6 +24,6 @@ typedef struct s_icmp_header
 	uint16_t sequence;
 }	t_icmp_header;
 
-uint16_t compute_checksum(void* data, int size);
+int parse_icmp_msg(t_rx_packet* packet, t_client* client);
 
 #endif

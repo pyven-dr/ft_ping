@@ -4,7 +4,10 @@
 #include <sys/time.h>
 #include <stddef.h>
 #include <stdint.h>
+
 #include "opt.h"
+#include "ip.h"
+#include "icmp.h"
 
 struct sockaddr_in;
 
@@ -34,6 +37,14 @@ typedef struct s_ping_stats
 	size_t m2;
 
 }	t_ping_stats;
+
+typedef struct s_rx_packet
+{
+	t_ip_header ip_header;
+	t_icmp_header icmp_header;
+	uint8_t* raw_packet;
+	size_t packet_size;
+}	t_rx_packet;
 
 int init_client(t_client* client);
 int send_ping(struct sockaddr_in *addr, t_client *client, int seq_number);

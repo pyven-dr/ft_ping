@@ -1,5 +1,5 @@
 #include "client.h"
-#include "process.h"
+#include "network.h"
 
 int process_hosts(char** hosts, int nb_hosts, t_client* client)
 {

@@ -6,7 +6,6 @@
 #include "client.h"
 #include "icmp.h"
 
-
 int send_ping(struct sockaddr_in *addr, t_client *client, int seq_number)
 {
 	t_icmp_header* header = (t_icmp_header*)client->buffer;

@@ -2,9 +2,12 @@
 #define IP_H
 
 #include <stdint.h>
+#include <stddef.h>
 
-#define IP_IHL(byte) ((byte) & 0xF)
-#define IP_VERSION(byte) ((byte) >> 4)
+typedef struct s_rx_packet t_rx_packet;
+
+#define IP_IHL(byte)		((byte) & 0xF)
+#define IP_VERSION(byte)	((byte) >> 4)
 
 #define IP_VERSION_OFFSET	0
 #define IP_TOS_OFFSET		1
@@ -16,6 +19,8 @@
 #define IP_CHECKSUM_OFFSET	10
 #define IP_SRC_ADDR_OFFSET	12
 #define IP_DEST_ADDR_OFFSET	16
+
+#define IP_PROTOCOL_ICMP 	1
 
 typedef struct s_ip_header
 {
@@ -32,6 +37,7 @@ typedef struct s_ip_header
 	uint32_t  dest_addr;
 }	t_ip_header;
 
-int parse_ip_header(uint8_t* raw_packet, t_ip_header* ip_header);
+uint16_t compute_checksum(const void* data, int size);
+int parse_ip_header(t_rx_packet* packet);
 
 #endif

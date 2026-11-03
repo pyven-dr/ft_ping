@@ -1,9 +1,9 @@
 #include <stdint.h>
 
-uint16_t compute_checksum(void* data, int size)
+uint16_t compute_checksum(const void* data, int size)
 {
 	long sum = 0;
-	uint16_t* ptr = data;
+	const uint16_t* ptr = data;
 
 	while (size > 1)
 	{

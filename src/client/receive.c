@@ -5,17 +5,15 @@
 
 #include "client.h"
 #include "icmp.h"
+#include "network.h"
 
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 {
-	(void)addr;
 	(void)stats;
-	char buffer[MAX_DATA_SIZE + sizeof(t_icmp_header)];
-	struct sockaddr_in rx_addr = {0};
-	socklen_t rx_len = 0;
+	uint8_t buffer[MAX_DATA_SIZE + sizeof(t_icmp_header)];
 
 	ssize_t rx_size = recvfrom(client->socket_fd, buffer, MAX_DATA_SIZE + sizeof(t_icmp_header),\
-			MSG_DONTWAIT, (struct sockaddr*)&rx_addr, &rx_len);
+			MSG_DONTWAIT, NULL, NULL);
 	if (rx_size == -1)
 	{
 		if (errno == EAGAIN || errno == EWOULDBLOCK)
@@ -24,9 +22,14 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 		return (1);
 	}
 
-	printf("%d, %ld\n", rx_len, sizeof(struct sockaddr_in));
 	if (rx_size != 0)
+	{
 		printf("received\n");
+		t_rx_packet packet = {0};
+		packet.raw_packet = buffer;
+		packet.packet_size = rx_size;
+		parse_packet(&packet, client, addr);
+	}
 	return (0);
 }
 
