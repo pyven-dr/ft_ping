@@ -2,6 +2,7 @@ SRC = main.c \
 	  process_hosts.c \
 	  resolve_addr.c \
 	  checksum.c \
+	  interval.c \
 	  \
 	  client/init_client.c \
 	  client/send_ping.c \

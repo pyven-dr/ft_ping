@@ -1,3 +1,7 @@
+#include <string.h>
+
+#include <stdio.h>
+
 #include "client.h"
 #include "ip.h"
 #include "icmp.h"
@@ -20,6 +24,10 @@ int parse_icmp_msg(t_rx_packet* packet, t_client* client)
 	packet->icmp_header.identifier = read_raw_16(raw_icmp, ICMP_ID_OFFSET);
 	packet->icmp_header.sequence = read_raw_16(raw_icmp, ICMP_SEQ_OFFSET);
 
+	if (message_size >= 16)
+	{
+		memcpy(&packet->sent_time, raw_icmp + ICMP_DATA_OFFSET, sizeof(struct timeval));
+	}
 	if (compute_checksum(raw_icmp, message_size) != 0)
 		return (1);
 	return (0);

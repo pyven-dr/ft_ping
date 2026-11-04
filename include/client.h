@@ -42,13 +42,15 @@ typedef struct s_rx_packet
 {
 	t_ip_header ip_header;
 	t_icmp_header icmp_header;
+	struct timeval sent_time;
 	uint8_t* raw_packet;
 	size_t packet_size;
 }	t_rx_packet;
 
 int init_client(t_client* client);
-int send_ping(struct sockaddr_in *addr, t_client *client, int seq_number);
+int send_ping(struct sockaddr_in *addr, t_client *client, t_ping_stats* stats);
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats);
 int ping_loop(t_client* client, struct sockaddr_in* addr);
+double interval(struct timeval* start, struct timeval* end);
 
 #endif
