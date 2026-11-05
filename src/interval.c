@@ -3,8 +3,8 @@
 
 double interval(struct timeval* start, struct timeval* end)
 {
-	double start_us = start->tv_sec * 1000000 + start->tv_usec;
-	double end_us = end->tv_sec * 1000000 + end->tv_usec;
+	double start_us = (double)start->tv_sec * 1000000.0 + (double)start->tv_usec;
+	double end_us = (double)end->tv_sec * 1000000.0 + (double)end->tv_usec;
 
-	return ((end_us - start_us) / 1000);
+	return ((end_us - start_us) / 1000.0);
 }

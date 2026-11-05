@@ -17,9 +17,6 @@ int send_ping(struct sockaddr_in *addr, t_client *client, t_ping_stats* stats)
 		memcpy(client->buffer + sizeof(t_icmp_header), \
 				&stats->last_sent, sizeof(struct timeval));
 
-	printf("%zu\n", stats->last_sent.tv_sec);
-	printf("%zu\n", stats->last_sent.tv_usec);
-
 	header->type = ICMP_ECHO;
 	header->code = 0;
 	header->checksum = 0;

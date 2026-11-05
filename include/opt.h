@@ -8,7 +8,7 @@
 #define S_TO_MS 1000
 
 #define DEFAULT_SIZE 56
-#define DEFAULT_TTL 255
+#define DEFAULT_TTL 64
 #define DEFAULT_INTERVAL 1000
 
 #define MAX_TTL 255

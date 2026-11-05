@@ -42,7 +42,9 @@ typedef struct s_rx_packet
 {
 	t_ip_header ip_header;
 	t_icmp_header icmp_header;
+	
 	struct timeval sent_time;
+
 	uint8_t* raw_packet;
 	size_t packet_size;
 }	t_rx_packet;

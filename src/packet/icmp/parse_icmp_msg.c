@@ -1,7 +1,5 @@
 #include <string.h>
 
-#include <stdio.h>
-
 #include "client.h"
 #include "ip.h"
 #include "icmp.h"
@@ -12,8 +10,6 @@ int parse_icmp_msg(t_rx_packet* packet, t_client* client)
 	size_t message_size = client->opt.size + sizeof(t_icmp_header);
 	uint8_t* raw_icmp;
 
-	if (packet->packet_size - (packet->ip_header.ihl * 4) < message_size)
-		return (1);
 	if(packet->ip_header.protocol != IP_PROTOCOL_ICMP)
 		return (1);
 

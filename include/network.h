@@ -7,11 +7,14 @@
 
 typedef struct s_client t_client;
 typedef struct s_rx_packet t_rx_packet;
+typedef struct s_ping_stats t_ping_stats;
 
 uint32_t read_raw_32(const uint8_t* raw_packet, size_t offset);
 uint16_t read_raw_16(const uint8_t* raw_packet, size_t offset);
 int process_hosts(char** hosts, int nb_hosts, t_client* socket_fd);
 int resolve_addr(char* name, struct sockaddr_in* addr_res);
-int parse_packet(t_rx_packet* packet, t_client* client, struct sockaddr_in* target_addr);
+int parse_packet(t_rx_packet* packet, t_client* client);
+int handle_packet(t_rx_packet* packet, t_client* client, \
+		t_ping_stats* stats, struct sockaddr_in* target);
 
 #endif
