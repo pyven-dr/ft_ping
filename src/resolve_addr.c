@@ -17,7 +17,7 @@ int resolve_addr(const char* name, struct sockaddr_in* addr_res)
 
 	if (getaddrinfo(name, NULL, &hints, &res) != 0 || res == NULL)
 	{
-		printf("err\n");
+		printf("ft_ping: unknown host\n");
 		return (1);
 	}
 

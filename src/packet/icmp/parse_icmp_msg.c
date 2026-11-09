@@ -5,16 +5,6 @@
 #include "icmp.h"
 #include "network.h"
 
-/*static int parse_data(uint8_t* raw_icmp, t_rx_packet* packet)
-{
-	size_t message_size = (packet->ip_header.total_len - packet->ip_header.ihl * 4);
-	
-	if (message_size >= 16)
-		memcpy(&packet->sent_time, raw_icmp + ICMP_DATA_OFFSET, sizeof(struct timeval));
-	if (compute_checksum(raw_icmp, message_size) != 0)
-		return (1);
-	return (0);
-}*/
 
 static int parse_icmp_fields(uint8_t* raw_icmp, t_rx_packet* packet)
 {
@@ -41,7 +31,7 @@ int parse_icmp_msg(t_rx_packet* packet)
 	if (message_size - sizeof(t_icmp_header) >= 16)
 		memcpy(&packet->sent_time, raw_icmp + ICMP_DATA_OFFSET, sizeof(struct timeval));
 	if (compute_checksum(raw_icmp, message_size) != 0)
-		return (1);
+		return (0);
 	return (0);
 }
 

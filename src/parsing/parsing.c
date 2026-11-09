@@ -10,6 +10,7 @@ static void default_opt(t_ping_opt* opt)
 	opt->size = DEFAULT_SIZE;
 	opt->interval = DEFAULT_INTERVAL;
 	opt->ttl = DEFAULT_TTL;
+	opt->linger = DEFAULT_LINGER;
 }
 
 int parsing_args(int argc, char** argv, t_ping_opt* opt)

@@ -27,6 +27,7 @@ typedef struct s_ping_stats
 	struct timeval last_sent;
 	size_t seq_number;
 
+	size_t nb_response;
 
 	size_t nb_tx;
 	size_t nb_rx;

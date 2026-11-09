@@ -42,7 +42,7 @@ void print_error(uint16_t type)
 			return;
 		}
 	}
-	printf("Unknown");
+	printf("Unknown icmp type");
 }
 
 int handle_error(t_rx_packet* packet, t_client* client)
@@ -56,6 +56,11 @@ int handle_error(t_rx_packet* packet, t_client* client)
 	if (parse_pakcet_err_payload(&original_packet) == 1)
 		return (0);
 
+	size_t msg_size = packet->packet_size - packet->ip_header.ihl * 4;
+
+	printf("%zu bytes from ", msg_size);
+	print_ip(packet->ip_header.src_addr);
+	printf(": ");
 	print_error(ICMP_TYPE_ENCODE(packet->icmp_header.type, packet->icmp_header.code));
 	printf("\n");
 	return (0);

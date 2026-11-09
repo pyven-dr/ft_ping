@@ -8,7 +8,6 @@
 #include "icmp.h"
 #include "network.h"
 
-
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 {
 	(void)stats;
@@ -31,7 +30,7 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 		packet.raw_packet = buffer;
 		packet.packet_size = rx_size;
 		if (parse_packet(&packet) == 1)
-			return (1);
+			return (0);
 
 		uint16_t icmp_mes_type = ICMP_TYPE_ENCODE(packet.icmp_header.type, packet.icmp_header.code);
 		

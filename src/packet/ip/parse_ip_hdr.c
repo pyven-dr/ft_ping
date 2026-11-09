@@ -39,7 +39,7 @@ int parse_ip_header(t_rx_packet* packet)
 	if (packet->ip_header.ihl * 4 > packet->packet_size)
 		return (1);
 	if (compute_checksum(packet->raw_packet, packet->ip_header.ihl * 4) != 0)
-		return (1);
+		return (0);
 	return (0);
 }
 
