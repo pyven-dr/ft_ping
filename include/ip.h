@@ -37,7 +37,7 @@ typedef struct s_ip_header
 	uint32_t  dest_addr;
 }	t_ip_header;
 
-uint16_t compute_checksum(const void* data, int size);
 int parse_ip_header(t_rx_packet* packet);
+int parse_ip_err_payload(t_rx_packet* packet);
 
 #endif

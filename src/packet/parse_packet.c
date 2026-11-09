@@ -1,5 +1,4 @@
 #include <netinet/in.h>
-#include <stdio.h>
 #include <arpa/inet.h>
 
 #include "client.h"
@@ -38,11 +37,20 @@
 	printf("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n");
 }*/
 
-int parse_packet(t_rx_packet* packet, t_client* client)
+int parse_packet(t_rx_packet* packet)
 {
 	if (parse_ip_header(packet) == 1)
 		return (1);
-	if (parse_icmp_msg(packet, client) == 1)
+	if (parse_icmp_msg(packet) == 1)
+		return (1);
+	return (0);
+}
+
+int parse_pakcet_err_payload(t_rx_packet* packet)
+{
+	if (parse_ip_err_payload(packet) == 1)
+		return (1);
+	if (parse_icmp_err_payload(packet) == 1)
 		return (1);
 	return (0);
 }

@@ -5,16 +5,7 @@
 #include "ip.h"
 #include "network.h"
 
-static int check_valid(const t_rx_packet* packet)
-{
-	if (packet->ip_header.version != 4)
-		return (1);
-	if (compute_checksum(packet->raw_packet, packet->ip_header.ihl * 4) != 0)
-		return (1);
-	return (0);
-}
-
-int parse_ip_header(t_rx_packet* packet)
+static int parse_ip_fields(t_rx_packet* packet)
 {
 	t_ip_header* ip_header = &packet->ip_header;
 	uint8_t* raw_packet = packet->raw_packet;
@@ -33,5 +24,35 @@ int parse_ip_header(t_rx_packet* packet)
 	ip_header->header_checksum = read_raw_16(raw_packet, IP_CHECKSUM_OFFSET);
 	ip_header->src_addr = read_raw_32(raw_packet, IP_SRC_ADDR_OFFSET);
 	ip_header->dest_addr = read_raw_32(raw_packet, IP_DEST_ADDR_OFFSET);
-	return (check_valid(packet));
+	return (0);
+}
+
+int parse_ip_header(t_rx_packet* packet)
+{
+	if (parse_ip_fields(packet) == 1)
+		return (1);
+
+	if (packet->ip_header.version != 4)
+		return (1);
+	if (packet->ip_header.total_len > packet->packet_size)
+		return (1);
+	if (packet->ip_header.ihl * 4 > packet->packet_size)
+		return (1);
+	if (compute_checksum(packet->raw_packet, packet->ip_header.ihl * 4) != 0)
+		return (1);
+	return (0);
+}
+
+int parse_ip_err_payload(t_rx_packet* packet)
+{
+	if (parse_ip_fields(packet) == 1)
+		return (1);
+
+	if (packet->ip_header.version != 4)
+		return (1);
+	if (packet->ip_header.ihl * 4 > packet->packet_size)
+		return (1);
+	if (compute_checksum(packet->raw_packet, packet->ip_header.ihl * 4) != 0)
+		return (1);
+	return (0);
 }

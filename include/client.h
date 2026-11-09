@@ -50,9 +50,15 @@ typedef struct s_rx_packet
 }	t_rx_packet;
 
 int init_client(t_client* client);
+
 int send_ping(struct sockaddr_in *addr, t_client *client, t_ping_stats* stats);
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats);
 int ping_loop(t_client* client, struct sockaddr_in* addr);
+
 double interval(struct timeval* start, struct timeval* end);
+void print_ip(size_t ip);
+
+void handle_echo_reply(t_rx_packet* packet);
+int handle_error(t_rx_packet* packet, t_client* client);
 
 #endif
