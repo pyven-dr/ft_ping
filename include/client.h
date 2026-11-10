@@ -32,10 +32,10 @@ typedef struct s_ping_stats
 	size_t nb_tx;
 	size_t nb_rx;
 
-	size_t min;
-	size_t max;
-	size_t avg;
-	size_t m2;
+	double min;
+	double max;
+	double avg;
+	double m2;
 
 }	t_ping_stats;
 
@@ -54,12 +54,12 @@ int init_client(t_client* client);
 
 int send_ping(struct sockaddr_in *addr, t_client *client, t_ping_stats* stats);
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats);
-int ping_loop(t_client* client, struct sockaddr_in* addr);
+int ping_loop(t_client* client, struct sockaddr_in* addr, t_ping_stats* stats);
 
 double interval(struct timeval* start, struct timeval* end);
 void print_ip(size_t ip);
 
-void handle_echo_reply(t_rx_packet* packet);
-int handle_error(t_rx_packet* packet, t_client* client);
+void handle_echo_reply(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats);
+int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats);
 
 #endif

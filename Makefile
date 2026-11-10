@@ -9,6 +9,7 @@ MKDIR	:= mkdir -p
 
 CFLAGS		:= -Wall -Wextra -Werror
 CPPFLAGS	:= -I $(INCLUDE_DIR) -MD -MP
+LDFLAGS		:= -lm
 
 include src.mk
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
@@ -18,7 +19,7 @@ DEP := $(OBJ:.o=.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS) 
 
 -include $(DEP)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c

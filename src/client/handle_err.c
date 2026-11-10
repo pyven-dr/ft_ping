@@ -45,15 +45,16 @@ void print_error(uint16_t type)
 	printf("Unknown icmp type");
 }
 
-int handle_error(t_rx_packet* packet, t_client* client)
+int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats)
 {
-	(void)client;
 	t_rx_packet original_packet = {0};
 	size_t payload_offset = packet->ip_header.ihl * 4 + sizeof(t_icmp_header);
 
 	original_packet.raw_packet = packet->raw_packet + payload_offset;
 	original_packet.packet_size = packet->packet_size - payload_offset;
 	if (parse_pakcet_err_payload(&original_packet) == 1)
+		return (0);
+	if (original_packet.ip_header.dest_addr != ntohl(addr->sin_addr.s_addr))
 		return (0);
 
 	size_t msg_size = packet->packet_size - packet->ip_header.ihl * 4;
@@ -63,5 +64,7 @@ int handle_error(t_rx_packet* packet, t_client* client)
 	printf(": ");
 	print_error(ICMP_TYPE_ENCODE(packet->icmp_header.type, packet->icmp_header.code));
 	printf("\n");
+
+	++stats->nb_response;
 	return (0);
 }

@@ -10,10 +10,7 @@
 
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 {
-	(void)stats;
-	(void)addr;
 	uint8_t buffer[MAX_DATA_SIZE + sizeof(t_icmp_header)];
-
 	ssize_t rx_size = recvfrom(client->socket_fd, buffer, MAX_DATA_SIZE + sizeof(t_icmp_header),\
 			0, NULL, NULL);
 	if (rx_size == -1)
@@ -35,9 +32,9 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 		uint16_t icmp_mes_type = ICMP_TYPE_ENCODE(packet.icmp_header.type, packet.icmp_header.code);
 		
 		if (icmp_mes_type == ICMP_ECHO_REPLY)
-			handle_echo_reply(&packet);
+			handle_echo_reply(&packet, addr, stats);
 		else if (icmp_mes_type != ICMP_ECHO)
-			handle_error(&packet, client);
+			handle_error(&packet, addr, stats);
 	}
 	return (0);
 }
