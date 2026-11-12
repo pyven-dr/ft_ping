@@ -1,15 +1,9 @@
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/ip.h>
-#include <arpa/inet.h>
-#include <getopt.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
-#include "parsing.h"
-#include "network.h"
 #include "client.h"
+#include "network.h"
+#include "parsing.h"
 #include "utils.h"
 
 int main(int argc, char** argv)

@@ -1,6 +1,7 @@
 #include <signal.h>
 
 #include "client.h"
+#include "utils.h"
 
 extern sig_atomic_t signal_interrupt;
 

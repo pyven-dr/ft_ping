@@ -1,10 +1,9 @@
 #include <string.h>
 
 #include "client.h"
-#include "ip.h"
 #include "icmp.h"
 #include "network.h"
-
+#include "packet.h"
 
 static int parse_icmp_fields(uint8_t* raw_icmp, t_rx_packet* packet)
 {

@@ -1,12 +1,10 @@
-#include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <errno.h>
-#include <stdint.h>
 
 #include "client.h"
 #include "icmp.h"
-#include "network.h"
+#include "packet.h"
 
 static void handle_packet(uint8_t* buffer, size_t rx_size, struct sockaddr_in* addr, t_ping_stats* stats)
 {

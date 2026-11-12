@@ -28,6 +28,4 @@ typedef struct s_ping_opt
 	bool verbose;
 }	t_ping_opt;
 
-void print_help(void);
-
 #endif

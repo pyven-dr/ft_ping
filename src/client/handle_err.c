@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <arpa/inet.h>
 
 #include "client.h"
-#include "network.h"
+#include "utils.h"
+#include "packet.h"
 
 static void print_error(uint16_t type)
 {

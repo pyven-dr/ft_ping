@@ -1,7 +1,6 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <string.h>
-#include <limits.h>
 
 #include "opt.h"
 #include "parsing.h"

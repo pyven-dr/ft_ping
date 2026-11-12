@@ -11,10 +11,8 @@ typedef struct s_ping_stats t_ping_stats;
 
 uint32_t read_raw_32(const uint8_t* raw_packet, size_t offset);
 uint16_t read_raw_16(const uint8_t* raw_packet, size_t offset);
+
 int process_hosts(char** hosts, int nb_hosts, t_client* socket_fd);
 int resolve_addr(char* name, struct sockaddr_in* addr_res);
-int parse_packet(t_rx_packet* packet);
-int parse_pakcet_err_payload(t_rx_packet* packet);
-uint16_t compute_checksum(const void* data, int size);
 
 #endif

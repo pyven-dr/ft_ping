@@ -1,6 +1,4 @@
 #include <arpa/inet.h>
-#include <stdint.h>
-#include <stddef.h>
 #include <string.h>
 
 uint32_t read_raw_32(const uint8_t* raw_packet, size_t offset)

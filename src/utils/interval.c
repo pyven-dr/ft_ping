@@ -1,5 +1,4 @@
 #include <sys/time.h>
-#include <stddef.h>
 
 double interval(struct timeval* start, struct timeval* end)
 {

@@ -1,12 +1,10 @@
 #include <netinet/in.h>
-#include <stddef.h>
-#include <sys/time.h>
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "client.h"
 #include "icmp.h"
-#include "network.h"
+#include "packet.h"
 
 int send_ping(struct sockaddr_in *addr, t_client *client, t_ping_stats* stats)
 {

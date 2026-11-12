@@ -1,9 +1,7 @@
-#include <stdint.h>
-#include <arpa/inet.h>
-
 #include "client.h"
 #include "ip.h"
 #include "network.h"
+#include "packet.h"
 
 static int parse_ip_fields(t_rx_packet* packet)
 {

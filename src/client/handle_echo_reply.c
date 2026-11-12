@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include <netinet/in.h>
+#include <stdio.h>
 
 #include "client.h"
+#include "utils.h"
 
 static void update_stats(t_ping_stats* stats, double time_interval)
 {

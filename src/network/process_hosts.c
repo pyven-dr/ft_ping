@@ -1,6 +1,5 @@
 #include <arpa/inet.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <math.h>
 
 #include "client.h"

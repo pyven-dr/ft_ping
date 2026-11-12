@@ -1,6 +1,5 @@
 #include <getopt.h>
 #include <stdio.h>
-#include <unistd.h>
 
 #include "parsing.h"
 #include "opt.h"
