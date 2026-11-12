@@ -15,8 +15,6 @@ int process_hosts(char** hosts, int nb_hosts, t_client* socket_fd);
 int resolve_addr(char* name, struct sockaddr_in* addr_res);
 int parse_packet(t_rx_packet* packet);
 int parse_pakcet_err_payload(t_rx_packet* packet);
-int handle_packet(t_rx_packet* packet, t_client* client, \
-		t_ping_stats* stats, struct sockaddr_in* target);
 uint16_t compute_checksum(const void* data, int size);
 
 #endif

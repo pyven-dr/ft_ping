@@ -18,7 +18,10 @@ int main(int argc, char** argv)
 
 	ret = parsing_args(argc, argv, &client.opt);
 	if (ret == PARSE_HELP)
+	{
+		print_help();
 		return (0);
+	}
 	if (ret ==	PARSE_ERROR)
 		return (64);
 

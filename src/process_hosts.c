@@ -19,7 +19,7 @@ static void print_prologue(char* host, struct sockaddr_in* addr, t_client* clien
 
 static void print_epilogue(char* host, t_ping_stats* stats)
 {
-	size_t loss = (stats->nb_tx - stats->nb_rx) / stats->nb_tx * 100;
+	size_t loss = (stats->nb_tx - stats->nb_rx) * 100 / stats->nb_tx;
 	double stddev = sqrtl(stats->m2 / stats->nb_rx);
 
 	printf("--- %s ping statistics ---\n", host);

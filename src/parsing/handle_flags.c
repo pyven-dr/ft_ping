@@ -74,12 +74,9 @@ int handle_flags(int flag, char **argv, t_ping_opt* opt)
 	if (flag == '?')
 	{
 		if (optopt == 0 && strncmp(argv[optind - 1], "--", 2) != 0)
-		{
-			printf("? opt\n");
 			return (PARSE_HELP);
-		}
-			invalid_opt(argv);
-			return (PARSE_ERROR);
+		invalid_opt(argv);
+		return (PARSE_ERROR);
 	}
 	if (flag == ':')
 	{

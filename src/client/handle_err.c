@@ -3,7 +3,7 @@
 #include "client.h"
 #include "network.h"
 
-void print_error(uint16_t type)
+static void print_error(uint16_t type)
 {
 	static const t_icmp_err_mess err_messages[] = {
 		{ICMP_NET_UNREACH, "Destination Net Unreachable"},
@@ -49,15 +49,14 @@ int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* st
 {
 	t_rx_packet original_packet = {0};
 	size_t payload_offset = packet->ip_header.ihl * 4 + sizeof(t_icmp_header);
-
+	size_t msg_size = packet->packet_size - packet->ip_header.ihl * 4;
+	
 	original_packet.raw_packet = packet->raw_packet + payload_offset;
 	original_packet.packet_size = packet->packet_size - payload_offset;
 	if (parse_pakcet_err_payload(&original_packet) == 1)
 		return (0);
 	if (original_packet.ip_header.dest_addr != ntohl(addr->sin_addr.s_addr))
 		return (0);
-
-	size_t msg_size = packet->packet_size - packet->ip_header.ihl * 4;
 
 	printf("%zu bytes from ", msg_size);
 	print_ip(packet->ip_header.src_addr);
