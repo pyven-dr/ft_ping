@@ -6,24 +6,21 @@
 #include "icmp.h"
 #include "packet.h"
 
-static void handle_packet(uint8_t* buffer, size_t rx_size, struct sockaddr_in* addr, t_ping_stats* stats)
+static void handle_packet(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, uint16_t id)
 {
-	t_rx_packet packet = {0};
-	packet.raw_packet = buffer;
-	packet.packet_size = rx_size;
-	if (parse_packet(&packet) == 1)
+	if (packet->icmp_header.identifier != id)
 		return;
 
-	switch (packet.icmp_header.type)
+	switch (packet->icmp_header.type)
 	{
 		case ICMP_ECHO_REPLY:
-			handle_echo_reply(&packet, addr, stats);
+			handle_echo_reply(packet, addr, stats);
 			break;
 
 		case ICMP_DEST_UNREACH:
 		case ICMP_REDIRECT:
 		case ICMP_TIME_EXC:
-			handle_error(&packet, addr, stats);
+			handle_error(packet, addr, stats);
 			break;
 
 		default:
@@ -45,7 +42,15 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 	}
 
 	if (rx_size != 0)
-		handle_packet(buffer, rx_size, addr, stats);
+	{
+		t_rx_packet packet = {0};
+		packet.raw_packet = buffer;
+		packet.packet_size = rx_size;
+		if (parse_packet(&packet) == 1)
+			return (0);
+
+		handle_packet(&packet, addr, stats, client->ping_id);
+	}
 	return (0);
 }
 

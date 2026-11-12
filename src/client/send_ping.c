@@ -31,6 +31,7 @@ int send_ping(struct sockaddr_in *addr, t_client *client, t_ping_stats* stats)
 		return (1);
 	}
 
+	bitmap_set(stats->pend_bitmap, stats->seq_number);
 	++stats->seq_number;
 	++stats->nb_tx;
 	return (0);

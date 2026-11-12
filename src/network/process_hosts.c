@@ -22,10 +22,16 @@ static void print_epilogue(char* host, t_ping_stats* stats)
 	double stddev = sqrtl(stats->m2 / stats->nb_rx);
 
 	printf("--- %s ping statistics ---\n", host);
-	printf("%zu packets transmitted, %zu packets received, %zu%% packet loss\n", \
-			stats->nb_tx, stats->nb_rx, loss);
-	printf("round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n", \
-			stats->min, stats->avg, stats->max, stddev);
+	printf("%zu packets transmitted, %zu packets received, ", stats->nb_tx, stats->nb_rx);
+	
+	if (stats->nb_dup != 0)
+		printf("+%zu duplicates, ", stats->nb_dup);
+	
+	printf("%zu%% packet loss\n", loss);
+	
+	if (stats->nb_rx != 0)
+		printf("round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n", \
+				stats->min, stats->avg, stats->max, stddev);
 }
 
 int process_hosts(char** hosts, int nb_hosts, t_client* client)

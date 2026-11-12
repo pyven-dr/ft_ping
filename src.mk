@@ -6,6 +6,7 @@ SRC = main.c \
 	  client/ping_loop.c \
 	  client/handle_echo_reply.c \
 	  client/handle_err.c \
+	  client/bitmap.c \
 	  \
 	  network/process_hosts.c \
 	  network/resolve_addr.c \

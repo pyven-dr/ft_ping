@@ -11,6 +11,8 @@
 
 struct sockaddr_in;
 
+#define BITMAP_SIZE 128
+
 typedef struct s_client
 {
 	int socket_fd;
@@ -27,7 +29,10 @@ typedef struct s_ping_stats
 	struct timeval last_sent;
 	size_t seq_number;
 
+	uint8_t pend_bitmap[BITMAP_SIZE];
+
 	size_t nb_response;
+	size_t nb_dup;
 
 	size_t nb_tx;
 	size_t nb_rx;
@@ -58,5 +63,9 @@ int ping_loop(t_client* client, struct sockaddr_in* addr, t_ping_stats* stats);
 
 void handle_echo_reply(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats);
 int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats);
+
+void bitmap_set(uint8_t bitmap[static BITMAP_SIZE], size_t seq);
+void bitmap_unset(uint8_t bitmap[static BITMAP_SIZE], size_t seq);
+uint8_t bitmap_get(uint8_t bitmap[static BITMAP_SIZE], size_t seq);
 
 #endif
