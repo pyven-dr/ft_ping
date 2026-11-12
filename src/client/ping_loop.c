@@ -1,4 +1,8 @@
+#include <signal.h>
+
 #include "client.h"
+
+extern sig_atomic_t signal_interrupt;
 
 static int receive_last(t_client* client, t_ping_stats* stats, struct sockaddr_in* addr, \
 		struct timeval* global_start)
@@ -13,6 +17,9 @@ static int receive_last(t_client* client, t_ping_stats* stats, struct sockaddr_i
 	{
 		if (receive(addr, client, stats) == 1)
 			return (1);
+
+		if (signal_interrupt == 1)
+			return (0);
 		if (stats->nb_response == client->opt.count)
 			return (0);	
 		if (interval(global_start, &cur_time) >= (double)client->opt.timeout && client->opt.timeout != 0)
@@ -44,6 +51,8 @@ int ping_loop(t_client* client, struct sockaddr_in* addr, t_ping_stats* stats)
 				return (1);
 		}
 	
+		if (signal_interrupt == 1)
+			return (0);
 		if (interval(&start, &cur_time) >= (double)client->opt.timeout && client->opt.timeout != 0)
 			return (0);
 		if (stats->nb_tx >= client->opt.count && client->opt.count != 0)

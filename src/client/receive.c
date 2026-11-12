@@ -40,7 +40,7 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 			0, NULL, NULL);
 	if (rx_size == -1)
 	{
-		if (errno == EAGAIN || errno == EWOULDBLOCK)
+		if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)
 			return (0);
 		perror("ft_ping");
 		return (1);

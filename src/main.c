@@ -10,6 +10,7 @@
 #include "parsing.h"
 #include "network.h"
 #include "client.h"
+#include "utils.h"
 
 int main(int argc, char** argv)
 {
@@ -27,6 +28,14 @@ int main(int argc, char** argv)
 
 	if (init_client(&client) == 1)
 	{
+		perror("ft_ping");
+		return (1);
+	}
+
+	if (init_signal() == 1)
+	{
+		free(client.buffer);
+		close(client.socket_fd);
 		perror("ft_ping");
 		return (1);
 	}

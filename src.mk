@@ -5,6 +5,7 @@ SRC = main.c \
 	  interval.c \
 	  print_ip.c \
 	  print_help.c \
+	  signal.c \
 	  \
 	  client/init_client.c \
 	  client/send_ping.c \
