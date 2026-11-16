@@ -36,6 +36,7 @@ static void print_epilogue(char* host, t_ping_stats* stats)
 
 int process_hosts(char** hosts, int nb_hosts, t_client* client)
 {
+	gettimeofday(&client->start, NULL);
 	for (int i = 0; i < nb_hosts; ++i)
 	{
 		t_ping_stats stats = {.min = INFINITY};

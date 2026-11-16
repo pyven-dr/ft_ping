@@ -15,6 +15,7 @@ struct sockaddr_in;
 
 typedef struct s_client
 {
+	struct timeval start;
 	int socket_fd;
 
 	unsigned char* buffer;

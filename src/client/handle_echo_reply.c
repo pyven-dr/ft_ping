@@ -34,8 +34,8 @@ static int update_stats(t_ping_stats* stats, size_t seq)
 
 void handle_echo_reply(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats)
 {
-	struct timeval curr_time = {0};
-	gettimeofday(&curr_time, NULL);
+	struct timeval cur_time = {0};
+	gettimeofday(&cur_time, NULL);
 	
 	size_t msg_size = packet->packet_size - packet->ip_header.ihl * 4;
 
@@ -48,7 +48,7 @@ void handle_echo_reply(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_sta
 
 	if (msg_size - sizeof(t_icmp_header) >= sizeof(struct timeval))
 	{
-		double time_interval = interval(&packet->sent_time, &curr_time);
+		double time_interval = interval(&packet->sent_time, &cur_time);
 		printf(" time=%.3f ms", time_interval);
 		update_time_stats(stats, time_interval);
 	}

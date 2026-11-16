@@ -8,13 +8,11 @@
 
 static void handle_packet(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, uint16_t id)
 {
-	if (packet->icmp_header.identifier != id)
-		return;
-
 	switch (packet->icmp_header.type)
 	{
 		case ICMP_ECHO_REPLY:
-			handle_echo_reply(packet, addr, stats);
+			if (packet->icmp_header.identifier == id)
+				handle_echo_reply(packet, addr, stats);
 			break;
 
 		case ICMP_DEST_UNREACH:
