@@ -18,6 +18,7 @@ SRC = main.c \
 	  packet/parse_packet.c \
 	  packet/read_raw.c \
 	  packet/checksum.c \
+	  packet/dump_packet.c \
 	  \
 	  packet/ip/parse_ip_hdr.c \
 	  \

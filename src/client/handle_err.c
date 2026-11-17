@@ -40,14 +40,14 @@ static void print_error(uint16_t type)
 	{
 		if (type == err_messages[i].type)
 		{
-			printf("%s", err_messages[i].message);
+			printf("%2s", err_messages[i].message);
 			return;
 		}
 	}
 	printf("Unknown icmp type");
 }
 
-int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats)
+int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, bool verbose)
 {
 	t_rx_packet original_packet = {0};
 	size_t payload_offset = packet->ip_header.ihl * 4 + sizeof(t_icmp_header);
@@ -65,6 +65,9 @@ int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* st
 	printf(": ");
 	print_error(ICMP_TYPE_ENCODE(packet->icmp_header.type, packet->icmp_header.code));
 	printf("\n");
+
+	if (verbose == true)
+		print_verbose(&original_packet);
 
 	++stats->nb_response;
 	return (0);

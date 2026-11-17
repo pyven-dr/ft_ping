@@ -36,6 +36,7 @@ static void print_epilogue(char* host, t_ping_stats* stats)
 
 int process_hosts(char** hosts, int nb_hosts, t_client* client)
 {
+	int status = 0;
 	gettimeofday(&client->start, NULL);
 	for (int i = 0; i < nb_hosts; ++i)
 	{
@@ -49,6 +50,9 @@ int process_hosts(char** hosts, int nb_hosts, t_client* client)
 		if (ping_loop(client, &addr, &stats) == 1)
 			return (1);
 		print_epilogue(hosts[i], &stats);
+
+		if (stats.nb_rx < stats.nb_tx || stats.nb_dup != 0)
+			status = 1;
 	}
-	return (0);
+	return (status);
 }
