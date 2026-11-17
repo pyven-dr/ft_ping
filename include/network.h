@@ -14,5 +14,6 @@ uint16_t read_raw_16(const uint8_t* raw_packet, size_t offset);
 
 int process_hosts(char** hosts, int nb_hosts, t_client* socket_fd);
 int resolve_addr(char* name, struct sockaddr_in* addr_res);
+int print_name(uint32_t addr);
 
 #endif

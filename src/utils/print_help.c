@@ -12,6 +12,7 @@ void print_help(void)
 	static const struct s_option opt_desc[] = {
 		{'c', "count=NUMBER", "stop after sending NUMBER packets"},
 		{'i', "interval=NUMBER", "wait NUMBER seconds between sending each packet"},
+		{'n', "numeric", "do not resolve host addresses"},
 		{'\0', "ttl=N", "specify N as time-to-live"},
 		{'v', "verbose", "verbose output"},
 		{'w', "timeout=N", "stop after N seconds"},

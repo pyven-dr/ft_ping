@@ -6,7 +6,7 @@
 #include "icmp.h"
 #include "packet.h"
 
-static void handle_packet(t_rx_packet* packet, struct sockaddr_in* addr,
+static int handle_packet(t_rx_packet* packet, struct sockaddr_in* addr,
 		t_ping_stats* stats, t_client* client)
 {
 	switch (packet->icmp_header.type)
@@ -19,12 +19,12 @@ static void handle_packet(t_rx_packet* packet, struct sockaddr_in* addr,
 		case ICMP_DEST_UNREACH:
 		case ICMP_REDIRECT:
 		case ICMP_TIME_EXC:
-			handle_error(packet, addr, stats, client->opt.verbose);
-			break;
+			return (handle_error(packet, addr, stats, &client->opt));
 
 		default:
 			break;
 	}
+	return (0);
 }
 
 int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
@@ -48,7 +48,7 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats)
 		if (parse_packet(&packet) == 1)
 			return (0);
 
-		handle_packet(&packet, addr, stats, client);
+		return (handle_packet(&packet, addr, stats, client));
 	}
 	return (0);
 }

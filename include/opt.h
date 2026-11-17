@@ -26,6 +26,7 @@ typedef struct s_ping_opt
 	size_t linger;
 	size_t size;
 	bool verbose;
+	bool numeric;
 }	t_ping_opt;
 
 #endif

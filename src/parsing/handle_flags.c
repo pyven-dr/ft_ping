@@ -42,6 +42,11 @@ static int parse_flag(int flag, t_ping_opt* opt)
 			opt->verbose = true;
 			return (PARSE_OK);
 		}
+		case 'n':
+		{
+			opt->numeric = true;
+			return (PARSE_OK);
+		}
 		case 'c':
 			return (set_opt(&opt->count, optarg, 0, 0));
 		case 'i':

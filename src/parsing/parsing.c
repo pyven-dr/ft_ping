@@ -24,12 +24,13 @@ int parsing_args(int argc, char** argv, t_ping_opt* opt)
 		{"timeout", required_argument, NULL, 'w'},
 		{"linger", required_argument, NULL, 'W'},
 		{"size", required_argument, NULL, 's'},
+		{"numeric", no_argument, NULL, 'n'},
 		{0, 0, 0, 0}
 	};
 
 	opterr = 0;
 	default_opt(opt);
-	int flag = getopt_long(argc, argv, ":?vc:i:w:W:s:", long_options, NULL);
+	int flag = getopt_long(argc, argv, ":?vnc:i:w:W:s:", long_options, NULL);
 
 	while (flag != -1)
 	{
@@ -37,7 +38,7 @@ int parsing_args(int argc, char** argv, t_ping_opt* opt)
 		if (ret != 0)
 			return (ret);
 		
-		flag = getopt_long(argc, argv, ":?vc:i:w:W:s:", long_options, NULL);
+		flag = getopt_long(argc, argv, ":?vnc:i:w:W:s:", long_options, NULL);
 	}
 	
 	if (optind == argc)

@@ -63,7 +63,7 @@ int receive(struct sockaddr_in* addr, t_client* client, t_ping_stats* stats);
 int ping_loop(t_client* client, struct sockaddr_in* addr, t_ping_stats* stats);
 
 void handle_echo_reply(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats);
-int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, bool verbose);
+int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, t_ping_opt* opt);
 
 void bitmap_set(uint8_t bitmap[static BITMAP_SIZE], size_t seq);
 void bitmap_unset(uint8_t bitmap[static BITMAP_SIZE], size_t seq);

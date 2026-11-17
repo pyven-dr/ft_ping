@@ -4,6 +4,7 @@
 #include "client.h"
 #include "utils.h"
 #include "packet.h"
+#include "network.h"
 
 static void print_error(uint16_t type)
 {
@@ -47,7 +48,25 @@ static void print_error(uint16_t type)
 	printf("Unknown icmp type");
 }
 
-int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, bool verbose)
+static int print_source(uint32_t src_addr, bool numeric)
+{
+	if (numeric == false)
+	{
+		if (print_name(src_addr) != 0)
+			return (1);
+		printf(" (");
+		print_ip(src_addr);
+		printf("): ");
+	}
+	else
+	{
+		print_ip(src_addr);
+		printf(": ");
+	}
+	return (0);
+}
+
+int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* stats, t_ping_opt* opt)
 {
 	t_rx_packet original_packet = {0};
 	size_t payload_offset = packet->ip_header.ihl * 4 + sizeof(t_icmp_header);
@@ -61,12 +80,12 @@ int handle_error(t_rx_packet* packet, struct sockaddr_in* addr, t_ping_stats* st
 		return (0);
 
 	printf("%zu bytes from ", msg_size);
-	print_ip(packet->ip_header.src_addr);
-	printf(": ");
+	if (print_source(packet->ip_header.src_addr, opt->numeric) == 1)
+		return (1);
 	print_error(ICMP_TYPE_ENCODE(packet->icmp_header.type, packet->icmp_header.code));
 	printf("\n");
 
-	if (verbose == true)
+	if (opt->verbose == true)
 		print_verbose(&original_packet);
 
 	++stats->nb_response;

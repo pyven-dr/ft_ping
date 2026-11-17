@@ -10,6 +10,7 @@ SRC = main.c \
 	  \
 	  network/process_hosts.c \
 	  network/resolve_addr.c \
+	  network/reverse_resolve.c \
 	  \
 	  parsing/parsing.c \
 	  parsing/handle_flags.c \
