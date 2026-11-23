@@ -29,7 +29,7 @@ static void print_epilogue(char* host, t_ping_stats* stats)
 	
 	printf("%zu%% packet loss\n", loss);
 	
-	if (stats->nb_rx != 0)
+	if (stats->nb_rx != 0 && stats->min != INFINITY)
 		printf("round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms\n", \
 				stats->min, stats->avg, stats->max, stddev);
 }

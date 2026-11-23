@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 		print_help();
 		return (0);
 	}
-	if (ret ==	PARSE_ERROR)
+	if (ret == PARSE_ERROR)
 		return (64);
 
 	if (init_client(&client) == 1)
@@ -38,6 +38,4 @@ int main(int argc, char** argv)
 	free(client.buffer);
 	close(client.socket_fd);
 	return (ret);
-
-	return (0);
 }

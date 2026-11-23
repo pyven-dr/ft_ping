@@ -1,5 +1,6 @@
 #include <netdb.h>
 #include <stdio.h>
+#include <utils.h>
 
 int print_name(uint32_t addr)
 {
@@ -10,13 +11,25 @@ int print_name(uint32_t addr)
 	socket_addr.sin_addr.s_addr = htonl(addr);
 	
 	int ret = getnameinfo((struct sockaddr*)&socket_addr, sizeof(socket_addr), \
-				host, sizeof(host), NULL, 0, 0);
+				host, sizeof(host), NULL, 0, NI_NAMEREQD);
 	if (ret != 0)
 	{
-		dprintf(2, "ft_ping: %s\n", gai_strerror(ret));
-		return (1);
+		if (ret == EAI_NONAME)
+		{
+			print_ip(addr);
+			printf(": ");
+			return (0);
+		}
+		else
+		{
+			dprintf(2, "ft_ping: %s\n", gai_strerror(ret));
+			return (1);
+		}
 	}
 
 	printf("%s", host);
+	printf(" (");
+	print_ip(addr);
+	printf("): ");
 	return (0);
 }

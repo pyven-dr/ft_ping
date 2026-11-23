@@ -51,13 +51,7 @@ static void print_error(uint16_t type)
 static int print_source(uint32_t src_addr, bool numeric)
 {
 	if (numeric == false)
-	{
-		if (print_name(src_addr) != 0)
-			return (1);
-		printf(" (");
-		print_ip(src_addr);
-		printf("): ");
-	}
+		return (print_name(src_addr) != 0);
 	else
 	{
 		print_ip(src_addr);
