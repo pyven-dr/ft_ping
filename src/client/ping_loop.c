@@ -32,7 +32,7 @@ int ping_loop(t_client* client, struct sockaddr_in* addr, t_ping_stats* stats)
 		gettimeofday(&cur_time, NULL);
 		if (finishing == 1 && interval(&end_time, &cur_time) >= (double)client->opt.linger)
 				return (0);
-		
+	
 		if (finishing == 0 && interval(&stats->last_sent, &cur_time) >= (double)client->opt.interval)
 		{
 			if (client->opt.count != 0 && stats->nb_tx >= client->opt.count)

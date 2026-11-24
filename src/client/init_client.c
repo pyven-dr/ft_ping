@@ -21,7 +21,7 @@ static void set_opt(t_client* client)
 	int broadcast_flag = 1;
 	struct timeval timeout = {0};
 	timeout.tv_sec = 0;
-	timeout.tv_usec = 200000;
+	timeout.tv_usec = 100000;
 
 	setsockopt(client->socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(struct timeval));
 	setsockopt(client->socket_fd, SOL_IP, IP_TTL, &client->opt.ttl, sizeof(size_t));
