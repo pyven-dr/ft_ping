@@ -35,5 +35,5 @@ void print_help(void)
 		printf("--%-20s %s\n", opt_desc[i].long_opt, opt_desc[i].description);
 	}
 	printf("\nMandatory or optional arguments to long options are also mandatory or " \
-			"optional\n for any corresponding short options.\n");
+			"optional\nfor any corresponding short options.\n");
 }
